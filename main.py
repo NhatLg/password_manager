@@ -1,7 +1,31 @@
 import tkinter as tk
 from tkinter import messagebox
+import random
+import string
+import pyperclip
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def generate_pass():
+    letters = list(string.ascii_letters)
+    numbers = list(string.octdigits)
+    symbols = list(string.punctuation)
+
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_list = []
+
+    password_list = password_list + [random.choice(letters) for char in range(nr_letters)]
+    password_list = password_list + [random.choice(symbols) for sym in range(nr_symbols)]
+    password_list = password_list + [random.choice(numbers) for num in range(nr_numbers)]
+
+    random.shuffle(password_list)
+
+    password = "".join(password_list)
+
+    input_pass.insert(0, password)
+    pyperclip.copy(password)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
@@ -37,7 +61,7 @@ canvas.grid(row=0, column=1)
 
 # Button
 btn_add = tk.Button(text="Add", highlightthickness=0, width=44, command=save_password)
-btn_gen_pass = tk.Button(text="Generate Password", highlightthickness=0)
+btn_gen_pass = tk.Button(text="Generate Password", highlightthickness=0, command=generate_pass)
 
 btn_add.grid(row=4, column=1, columnspan=2)
 btn_gen_pass.grid(row=3, column=2)
